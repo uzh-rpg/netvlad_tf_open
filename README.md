@@ -17,6 +17,14 @@ For your convenience, here is the BibTeX of NetVLAD:
 
 This TensorFlow port has been written at [the Robotics and Perception Group](http://rpg.ifi.uzh.ch), University of Zurich and ETH Zurich.
 
+## Citation ##
+
+If you use this code in an academic context, please cite the following [ICRA'18 publication](http://rpg.ifi.uzh.ch/docs/ICRA18_Cieslewski.pdf):
+
+T. Cieslewski, S. Choudhary, D. Scaramuzza:
+**Data-Efficient Decentralized Visual SLAM**
+IEEE International Conference on Robotics and Automation (ICRA), 2018.
+
 ## Deploying the default model
 
 Download the checkpoint [here](http://rpg.ifi.uzh.ch/datasets/netvlad/vd16_pitts30k_conv5_3_vlad_preL2_intra_white.zip)(1.1 GB). Extract the zip and move its contents to the `checkpoints` folder of the repo. 
