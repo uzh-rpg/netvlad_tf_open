@@ -70,7 +70,7 @@ result = sess.run(net_out, feed_dict={image_batch: batch})
 
 ### A test to make sure that you get the correct output
 
-To verify that you get the correct output, download [this mat](http://rpg.ifi.uzh.ch/datasets/netvlad/example_stats.mat) (83MB) and put it into the `matlab` folder. Then, you can run `tests/test_nets.py`: if it passes, you get the same output as the Matlab implementation for the example image.
+To verify that you get the correct output, download [this mat](http://rpg.ifi.uzh.ch/datasets/netvlad/example_stats.mat) (83MB) and put it into the `matlab` folder. Then, you can run `tests/test_nets.py`: if it passes, you get the same output as the Matlab implementation for the example image. Note: [An issue](https://github.com/uzh-rpg/netvlad_tf_open/issues/1) has been reported where some versions of Matlab and Python load images differently.
 
 ## Importing other models trained [with Matlab](https://github.com/Relja/netvlad)
 
