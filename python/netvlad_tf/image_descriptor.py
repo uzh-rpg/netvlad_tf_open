@@ -6,6 +6,7 @@ import tensorflow as tf
 
 import netvlad_tf.nets as nets
 
+
 class ImageDescriptor(object):
 
     def __init__(self, is_grayscale=False):
@@ -44,3 +45,9 @@ class ImageDescriptor(object):
             descs = descs + list(self.sess.run(
                     self.net_out, feed_dict={self.tf_batch: batch}))
         return descs
+
+    def describe(self, image):
+        if self.is_grayscale:
+            batch = np.expand_dims(np.expand_dims(image, axis=0), axis=-1)
+            return self.sess.run(
+                self.net_out, feed_dict={self.tf_batch: batch}).squeeze()
