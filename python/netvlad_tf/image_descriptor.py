@@ -49,5 +49,7 @@ class ImageDescriptor(object):
     def describe(self, image):
         if self.is_grayscale:
             batch = np.expand_dims(np.expand_dims(image, axis=0), axis=-1)
-            return self.sess.run(
-                self.net_out, feed_dict={self.tf_batch: batch}).squeeze()
+        else:
+            batch = np.expand_dims(image, axis=0)
+        return self.sess.run(
+            self.net_out, feed_dict={self.tf_batch: batch}).squeeze()
