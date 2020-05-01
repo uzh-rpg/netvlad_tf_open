@@ -15,17 +15,17 @@ def vgg16NetvladPca(image_batch):
     '''
     assert len(image_batch.shape) == 4
     
-    with tf.variable_scope('vgg16_netvlad_pca'):
+    with tf.compat.v1.variable_scope('vgg16_netvlad_pca'):
         # Gray to color if necessary.
         if image_batch.shape[3] == 1:
-            x = tf.nn.conv2d(image_batch, np.ones((1, 1, 1, 3)), 
-                                  np.ones(4).tolist(), 'VALID')
+            x = tf.nn.conv2d(input=image_batch, filters=np.ones((1, 1, 1, 3)), 
+                                  strides=np.ones(4).tolist(), padding='VALID')
         else :
             assert image_batch.shape[3] == 3
             x = image_batch
         
         # Subtract trained average image.
-        average_rgb = tf.get_variable(
+        average_rgb = tf.compat.v1.get_variable(
                 'average_rgb', 3, dtype=image_batch.dtype)
         x = x - average_rgb
         
@@ -35,11 +35,11 @@ def vgg16NetvladPca(image_batch):
                 activation = tf.nn.relu
             else:
                 activation = None
-            return tf.layers.conv2d(inputs, out_dim, [3, 3], 1, padding='same',
+            return tf.compat.v1.layers.conv2d(inputs, out_dim, [3, 3], 1, padding='same',
                                     activation=activation, 
                                     name='conv%s' % numbers)
         def vggPool(inputs):
-            return tf.layers.max_pooling2d(inputs, 2, 2)
+            return tf.compat.v1.layers.max_pooling2d(inputs, 2, 2)
         
         x = vggConv(x, '1_1', 64, True)
         x = vggConv(x, '1_2', 64, False)
@@ -68,12 +68,12 @@ def vgg16NetvladPca(image_batch):
         x = vggConv(x, '5_3', 512, False)
         
         # NetVLAD
-        x = tf.nn.l2_normalize(x, dim=-1)
+        x = tf.nn.l2_normalize(x, axis=-1)
         x = layers.netVLAD(x, 64)
         
         # PCA
-        x = tf.layers.conv2d(tf.expand_dims(tf.expand_dims(x, 1), 1), 
+        x = tf.compat.v1.layers.conv2d(tf.expand_dims(tf.expand_dims(x, 1), 1), 
                              4096, 1, 1, name='WPCA')
-        x = tf.nn.l2_normalize(tf.layers.flatten(x), dim=-1)
+        x = tf.nn.l2_normalize(tf.compat.v1.layers.flatten(x), axis=-1)
         
     return x

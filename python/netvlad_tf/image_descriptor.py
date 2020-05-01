@@ -12,14 +12,14 @@ class ImageDescriptor(object):
     def __init__(self, is_grayscale=False):
         self.is_grayscale = is_grayscale
         if is_grayscale:
-            self.tf_batch = tf.placeholder(
+            self.tf_batch = tf.compat.v1.placeholder(
                     dtype=tf.float32, shape=[None, None, None, 1])
         else:
-            self.tf_batch = tf.placeholder(
+            self.tf_batch = tf.compat.v1.placeholder(
                     dtype=tf.float32, shape=[None, None, None, 3])
         self.net_out = nets.vgg16NetvladPca(self.tf_batch)
-        saver = tf.train.Saver()
-        self.sess = tf.Session()
+        saver = tf.compat.v1.train.Saver()
+        self.sess = tf.compat.v1.Session()
         saver.restore(self.sess, nets.defaultCheckpoint())
 
     def describeAllJpegsInPath(self, path, batch_size, verbose=False):
