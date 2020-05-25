@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import netvlad_tf.nets as nets
 
 import cv2
@@ -14,15 +16,17 @@ class TestNets(unittest.TestCase):
         ''' Need example_stats.mat in matlab folder, which can be generated
         with get_example_stats.m. Also need translated checkpoint, can be
         generated with mat_to_checkpoint.py. '''
-        tf.reset_default_graph()
 
-        image_batch = tf.placeholder(
+        tf.compat.v1.disable_eager_execution()
+        tf.compat.v1.reset_default_graph()
+
+        image_batch = tf.compat.v1.placeholder(
                 dtype=tf.float32, shape=[None, None, None, 3])
 
         net_out = nets.vgg16NetvladPca(image_batch)
-        saver = tf.train.Saver()
+        saver = tf.compat.v1.train.Saver()
 
-        sess = tf.Session()
+        sess = tf.compat.v1.Session()
         saver.restore(sess, nets.defaultCheckpoint())
 
         inim = cv2.imread(nfm.exampleImgPath())

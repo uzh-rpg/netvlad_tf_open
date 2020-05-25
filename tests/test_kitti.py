@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # This takes a lot of time to run, so not written as unit test.
 
 import netvlad_tf.nets as nets
@@ -20,7 +22,8 @@ import netvlad_tf.precision_recall as pr
 use_dim = 128
 
 #%% Get KITTI feats
-tf.reset_default_graph()
+tf.compat.v1.disable_eager_execution()
+tf.compat.v1.reset_default_graph()
 imd = ImageDescriptor(is_grayscale=True)
 feats = imd.describeAllJpegsInPath('kitti/00/image_0', 4, verbose=True)
 #%%

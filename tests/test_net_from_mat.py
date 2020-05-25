@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import netvlad_tf.net_from_mat as nfm
 
 import cv2
@@ -13,12 +15,13 @@ class TestNetFromMat(unittest.TestCase):
         ''' Need example_stats.mat in matlab folder, which can be generated
         with get_example_stats.m. '''
 
-        tf.reset_default_graph()
+        tf.compat.v1.disable_eager_execution()
+        tf.compat.v1.reset_default_graph()
         tf_layers = nfm.netFromMat()
 
         #%% Test if it's the same
-        sess = tf.Session()
-        tf.global_variables_initializer().run(session=sess)
+        sess = tf.compat.v1.Session()
+        tf.compat.v1.global_variables_initializer().run(session=sess)
 
         inim = cv2.imread(nfm.exampleImgPath())
         inim = cv2.cvtColor(inim, cv2.COLOR_BGR2RGB)
